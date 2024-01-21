@@ -7,8 +7,8 @@
 
       <div class="header__controls controls">
         <div class="controls__temperature">
-          <base-button :is-circular="true" label="℃" />
-          <base-button :is-circular="true" label="℉" />
+          <base-badge text="℃" />
+          <base-badge text="℉" />
         </div>
         <theme-toggler />
       </div>
@@ -39,24 +39,6 @@ defineOptions({
   &__controls {
     @include flex($align: center, $justify: space-between);
     gap: space(2);
-  }
-}
-
-.profile {
-  @include flex($align: center);
-  gap: space(8);
-}
-.drawer {
-  cursor: pointer;
-  &__sign-out-icon,
-  &__icon {
-    @include dimension(3rem, 3rem);
-    &--reverse {
-      transform: rotate(180deg);
-    }
-  }
-  &__search {
-    background-color: var(--theme-palette-surface);
   }
 }
 
