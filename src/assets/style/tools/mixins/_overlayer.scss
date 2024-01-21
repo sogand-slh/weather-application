@@ -1,0 +1,37 @@
+@use "../../abstracts" as *;
+@use "./theme-pallet-setter" as *;
+
+
+%layer {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease-out;
+}
+
+@mixin overlayer($layer, $pseudo-classes: (
+        hover: false,
+        active: false,
+        focus: false,
+)) {
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    opacity: 0;
+    @extend %layer;
+  }
+
+  @each $class, $is-available in $pseudo-classes {
+    @if($is-available == true) {
+      &:#{$class} {
+        &::before {
+          opacity: 1;
+          @extend %layer;
+          @include theme-pallet-setter($layer);
+        }
+      }
+    }
+  }
+}

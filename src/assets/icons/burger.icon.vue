@@ -1,0 +1,28 @@
+<template>
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g id="vuesax/outline/menu">
+      <g id="vuesax/outline/menu_2">
+        <g id="menu">
+          <path
+            id="Vector"
+            d="M21 7.25H3C2.86614 7.25 2.75 7.13386 2.75 7C2.75 6.86614 2.86614 6.75 3 6.75H21C21.1339 6.75 21.25 6.86614 21.25 7C21.25 7.13386 21.1339 7.25 21 7.25Z"
+            fill="currentColor"
+            stroke="currentColor"
+          />
+          <path
+            id="Vector_2"
+            d="M21 12.25H3C2.86614 12.25 2.75 12.1339 2.75 12C2.75 11.8661 2.86614 11.75 3 11.75H21C21.1339 11.75 21.25 11.8661 21.25 12C21.25 12.1339 21.1339 12.25 21 12.25Z"
+            fill="currentColor"
+            stroke="currentColor"
+          />
+          <path
+            id="Vector_3"
+            d="M21 17.25H3C2.86614 17.25 2.75 17.1339 2.75 17C2.75 16.8661 2.86614 16.75 3 16.75H21C21.1339 16.75 21.25 16.8661 21.25 17C21.25 17.1339 21.1339 17.25 21 17.25Z"
+            fill="currentColor"
+            stroke="currentColor"
+          />
+        </g>
+      </g>
+    </g>
+  </svg>
+</template>

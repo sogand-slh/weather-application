@@ -1,0 +1,25 @@
+@use "../abstracts" as *;
+@use "../tools" as *;
+
+.loading-skeleton {
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    @include dimension(100%, 100%);
+    @include theme-pallet-setter(loading-light, background);
+    background-size: 200% 100% !important;
+    z-index: $loading-skeleton;
+    position: absolute;
+    inset: 0;
+    border-radius: shaper(1);
+    animation: 1.5s shine linear infinite;
+  }
+}
+
+@keyframes shine {
+  to {
+    background-position-x: -200%;
+  }
+}

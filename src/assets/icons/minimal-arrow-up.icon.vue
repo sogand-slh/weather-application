@@ -1,0 +1,17 @@
+<template>
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g id="vuesax/outline/arrow-up-small">
+      <g id="vuesax/linear/arrow-down">
+        <g id="arrow-down">
+          <path
+            id="Vector (Stroke)"
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M7.46752 14.5282C7.75922 14.8223 8.23409 14.8242 8.52817 14.5325L12.2327 10.8579C12.3778 10.714 12.6222 10.714 12.7673 10.8579L16.4718 14.5325C16.7659 14.8242 17.2408 14.8223 17.5325 14.5282C17.8242 14.2341 17.8223 13.7592 17.5282 13.4675L13.8236 9.79298C13.0937 9.06901 11.9063 9.06901 11.1764 9.79298L7.47183 13.4675C7.17775 13.7592 7.17582 14.2341 7.46752 14.5282Z"
+            fill="currentColor"
+          />
+        </g>
+      </g>
+    </g>
+  </svg>
+</template>

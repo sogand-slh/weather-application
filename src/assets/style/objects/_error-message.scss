@@ -1,0 +1,13 @@
+@use "../abstracts" as *;
+@use "../tools" as *;
+
+.error-message {
+  @include flex($align: center);
+  margin: space(2) 0;
+  gap: space(1);
+  color: var(--theme-palette-on-error-container);
+  @include typography("caption");
+  &__icon {
+    @include dimension($width: 1.5rem, $height: 1.5rem);
+  }
+}

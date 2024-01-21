@@ -1,0 +1,26 @@
+@use "../abstracts" as *;
+@use "../tools" as *;
+
+html {
+  height: 100%;
+  font-family: $ff-primary, sans-serif;
+  min-height: 100vh;
+  font-size: 10px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--theme-palette-on-surface);
+  background-color: var(--theme-palette-surface);
+}
+
+body {
+  @include typography('body1');
+  overflow: hidden scroll;
+
+  // FIXME: why the hell extend hide-scrollbar not working in here
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+}
