@@ -1,5 +1,4 @@
 import { fileURLToPath, URL } from "node:url";
-
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
@@ -15,32 +14,26 @@ const iconDomains = readdirSync(ICON_DIRECTORY_PATH, {
   withFileTypes: true,
 }).map((directory) => directory.name);
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
     AutoImport({
       imports: ["vue", "vue-router", "pinia", "vee-validate"],
-      dirs: ["./src/composables", "./src/stores/*/index.js", "./src/utils"],
+      dirs: ["./src/composables", "./src/stores/*/index.js", "./src/utils", "./src/plugins"],
       eslintrc: {
         enabled: true,
       },
     }),
-    // Components({
-    //   strictCustomNameTransform: (name) => name.replace(".component", ""),
-    //   resolvers: [
-    //     IconsResolver({
-    //       prefix: "icon",
-    //       customCollections: iconDomains,
-    //     }),
-    //   ],
-    // }),
     Components({
-      // allow auto load markdown components under `./src/components/`
       extensions: ["vue", "md"],
-      // allow auto import and register components used in markdown
       include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+      resolvers: [
+        IconsResolver({
+          prefix: "icon",
+          customCollections: iconDomains,
+        }),
+      ],
       dts: "src/components.d.ts",
     }),
     Icons({
@@ -71,27 +64,3 @@ export default defineConfig({
     },
   },
 });
-
-// import vue from "@vitejs/plugin-vue";
-// import { defineConfig } from "vite";
-// import { fileURLToPath, URL } from "node:url";
-// import ViteRequireContext from "@originjs/vite-plugin-require-context";
-
-// // https://vitejs.dev/config/
-// export default defineConfig({
-//   resolve: {
-//     alias: {
-//       "@": fileURLToPath(new URL("./src", import.meta.url)),
-//     },
-//   },
-//   css: {
-//     preprocessorOptions: {
-//       scss: {
-//         additionalData: `
-//         @import "./src/assets/style/index.scss";
-//       `,
-//       },
-//     },
-//   },
-//   plugins: [vue(), ViteRequireContext()],
-// });
