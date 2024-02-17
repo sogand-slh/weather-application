@@ -1,11 +1,19 @@
 <template>
   <header class="header">
     <div class="header__content-wrapper">
-      <div class="header__logo">
-        <image-loader name="logo" alt="weather-logo" />
+      <div class="header__location">
+        <icon-loader name="location" class="header__location--icon" />
+        <span>{{ city }}</span>
       </div>
 
       <div class="header__controls controls">
+        <text-field
+          v-model="selectedCity"
+          :placeholder="translator('searchCity')"
+          :name="translator('city')"
+          :rules="{ required: true }"
+          prepend-icon="location"
+        />
         <div class="controls__temperature">
           <base-badge text="℃" />
           <base-badge text="℉" />
@@ -17,9 +25,17 @@
 </template>
 
 <script setup>
+import { useLocaleTranslator } from "@/composables";
+import { ref } from "vue";
+
+const { translator } = useLocaleTranslator("components.theHeader");
+
 defineOptions({
   name: "the-header",
 });
+
+const city = ref("Tehran");
+const selectedCity = ref("Tehran");
 </script>
 
 <style lang="scss" scoped>
@@ -33,8 +49,12 @@ defineOptions({
     @include dimension(90%);
     margin: 0 auto;
   }
-  &__logo {
-    @include dimension(8rem);
+
+  &__location {
+    @include flex($align: center, $justify: space-between);
+    &--icon {
+      @include dimension(3rem, 3rem);
+    }
   }
   &__controls {
     @include flex($align: center, $justify: space-between);
