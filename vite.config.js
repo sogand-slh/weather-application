@@ -19,5 +19,6 @@ export default defineConfig({
       },
     },
   },
+  transpile: ["vee-validate/dist/rules"],
   plugins: [vue(), ViteRequireContext()],
 });

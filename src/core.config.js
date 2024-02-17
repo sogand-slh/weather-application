@@ -15,7 +15,7 @@ export default createCore({
     ignore: [],
   },
   directives: true,
-  plugins: ["axios", "i18n", "themeManager"],
+  plugins: ["axios", "i18n","veeValidate", "themeManager"],
   middlewares: [],
   constants: false,
 });
