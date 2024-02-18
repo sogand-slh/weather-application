@@ -5,18 +5,20 @@
 </template>
 
 <script setup>
-import { defineAsyncComponent } from "vue";
+import { defineAsyncComponent, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 
 const Layout = defineAsyncComponent(() =>
   import("@/core").then((res) => res.Layout)
 );
 const i18n = useI18n();
-// const accessControlStore = useAccessControlStore();
 
 const setLocaleOnDocument = () => {
   document.documentElement.lang = i18n.locale.value;
 };
+onMounted(() => {
+  setLocaleOnDocument();
+});
 </script>
 
 <style lang="scss" scoped>

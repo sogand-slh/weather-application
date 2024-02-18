@@ -4,25 +4,24 @@
     :disabled="isDisabled"
     :type="type"
   >
-    <template v-if="isCircular">
-      <span class="base-button__label">{{ label }}</span>
-
-      <icon-loader v-if="circularIcon" :name="circularIcon" />
-    </template>
+    <circular-loading v-if="isLoading" />
     <template v-else>
-      <icon-loader
-        class="base-button__icon"
-        :name="prependIcon"
-        v-if="prependIcon"
-      />
+      <icon-loader v-if="circularIcon" :name="circularIcon" />
+      <template v-else>
+        <icon-loader
+          class="base-button__icon"
+          :name="prependIcon"
+          v-if="prependIcon"
+        />
 
-      <span class="base-button__label">{{ label }}</span>
+        <span class="base-button__label">{{ label }}</span>
 
-      <icon-loader
-        class="base-button__icon"
-        :name="appendIcon"
-        v-if="appendIcon"
-      />
+        <icon-loader
+          class="base-button__icon"
+          :name="appendIcon"
+          v-if="appendIcon"
+        />
+      </template>
     </template>
   </button>
 </template>
@@ -30,7 +29,6 @@
 <script setup>
 import { useClassModifier } from "@/composables";
 import { computed } from "vue";
-import iconLoader from "@/components/icon-loader/icon-loader.component.vue";
 
 defineOptions({
   name: "base-button",
@@ -76,10 +74,6 @@ const props = defineProps({
     type: String,
     default: "",
   },
-  isCircular: {
-    type: Boolean,
-    default: false,
-  },
 });
 
 const baseButtonClassConditionMapper = computed(() => [
@@ -96,7 +90,7 @@ const baseButtonClassConditionMapper = computed(() => [
     modifier: `--${props.size}`,
   },
   {
-    condition: props.isCircular,
+    condition: props.circularIcon,
     modifier: `--circular`,
   },
 ]);
@@ -116,16 +110,19 @@ $root: "base-button";
   border-radius: shaper(4);
   transition: $transition-3;
   @include flex($align: center, $justify: center);
-
+  gap: space(2);
   &__icon {
-    @include dimension(3rem, 3rem);
+    @include dimension(
+      var(--base-button-icon-dimension, 3rem),
+      var(--base-button-icon-dimension, 3rem)
+    );
   }
 
   &__label {
     @include typography("button2");
   }
   &--filled {
-    background-color: var(--theme-palette-primary, #646cffaa);
+    background-color: var(--theme-palette-primary);
     color: var(--theme-palette-on-primary);
 
     @include overlayer(
@@ -143,7 +140,7 @@ $root: "base-button";
   }
 
   &--outlined {
-    background-color: var(--theme-palette-surface);
+    background-color: transparent;
     border: 3px solid var(--theme-palette-primary);
     color: var(--theme-palette-primary);
     transition: $transition-3;
@@ -188,7 +185,7 @@ $root: "base-button";
     }
 
     &.#{$root}--outlined {
-      background-color: var(--theme-palette-surface);
+      background-color: transparent;
       border: 3px solid var(--theme-palette-on-disabled);
     }
 

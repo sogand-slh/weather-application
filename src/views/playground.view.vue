@@ -10,16 +10,55 @@
           prepend-icon="user"
           size="medium"
         />
+        <base-button
+          label="Login"
+          variant="filled"
+          prepend-icon="user"
+          size="medium"
+        />
+        <base-button circular-icon="user" variant="outlined" size="large" />
       </div>
     </section>
     <section class="playground__component">
       <h2 class="playground__component-name">The Header</h2>
       <the-header />
     </section>
+    <section class="playground__component">
+      <h2 class="playground__component-name">Base Card</h2>
+      <base-card title="Wind status" />
+      <base-card title="Sunrise & Sunset" />
+      <base-card title="UV index" />
+    </section>
+    <section class="playground__component">
+      <h2 class="playground__component-name">Base Dropdown</h2>
+      <base-dropdown
+        name="Profile Actions"
+        placeholder="Profile Actions"
+        prepend-icon="minimal-arrow-down"
+        :items="drawerItems"
+        v-model="isDrawerVisible"
+      />
+    </section>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const isDrawerVisible = ref(true);
+const drawerItems = ref([
+  {
+    label: "7 Days",
+    value: "7-days",
+  },
+  {
+    label: "Daily",
+    value: "daily",
+  },
+  {
+    label: "Monthly",
+    value: "monthly",
+  },
+]);
+</script>
 
 <style scoped lang="scss">
 .playground {
