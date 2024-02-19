@@ -32,9 +32,10 @@
     <section class="playground__component">
       <h2 class="playground__component-name">Base Dropdown</h2>
       <base-dropdown
-        name="Profile Actions"
-        placeholder="Profile Actions"
-        prepend-icon="minimal-arrow-down"
+        class="dropdown"
+        placeholder="Days"
+        prepend-icon="arrow-down"
+        name="Days"
         :items="drawerItems"
         v-model="isDrawerVisible"
       />
@@ -43,15 +44,17 @@
 </template>
 
 <script setup>
-const isDrawerVisible = ref(true);
+import { ref } from "vue";
+
+const isDrawerVisible = ref(false);
 const drawerItems = ref([
   {
-    label: "7 Days",
-    value: "7-days",
+    label: "Daily",
+    value: "Daily",
   },
   {
-    label: "Daily",
-    value: "daily",
+    label: "Weekly",
+    value: "weekly",
   },
   {
     label: "Monthly",
@@ -72,7 +75,7 @@ const drawerItems = ref([
   }
 
   &__component {
-    @include dimension(85%);
+    @include dimension(70%);
     box-sizing: border-box;
     margin: space(5) auto;
     border-bottom: 2px solid var(--theme-palette-placeholder);
@@ -96,6 +99,9 @@ const drawerItems = ref([
   }
 }
 
+.dropdown {
+  @include dimension(100px);
+}
 .button {
   @include flex(column);
 
