@@ -95,7 +95,10 @@ const selectItem = (item) => {
 $root: "dropdown";
 .#{$root} {
   position: relative;
-
+  color: var(--theme-palette-surface-highest);
+  background-color: var(--theme-palette-primary);
+  border-radius: shaper(5);
+  padding: space(2);
   &__toggle {
     @include flex($align: center, $justify: space-between);
     gap: space(2);
