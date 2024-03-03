@@ -122,6 +122,9 @@ $root: "dropdown";
 
   &__collapsible {
     position: absolute;
+    right: 0;
+    top: 100%;
+    border-end-end-radius: shaper(5);
     z-index: $drawer;
     @include dimension(100%);
     @include elevation(2);
