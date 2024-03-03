@@ -1,6 +1,11 @@
 <template>
   <base-card>
-    <div>
+    <div class="search">
+      <search-input title="search" />
+
+      hi
+    </div>
+    <div class="city-information">
       <image-loader name="logo" />
       <span>{{ temperature }}</span>
       <span>{{ temperature }}</span>
