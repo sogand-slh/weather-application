@@ -11,4 +11,10 @@ export default [
     component: routeConstants.playground.COMPONENT,
     meta: routeConstants.playground.META,
   },
+  {
+    path: routeConstants.dashboard.PATH,
+    name: routeConstants.dashboard.NAME,
+    component: routeConstants.dashboard.COMPONENT,
+    meta: routeConstants.dashboard.META,
+  },
 ];
