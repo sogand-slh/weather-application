@@ -40,6 +40,10 @@
         v-model="isDrawerVisible"
       />
     </section>
+    <section class="playground__component">
+      <h2 class="playground__component-name">Search input</h2>
+      <search-input title="search" />
+    </section>
   </div>
 </template>
 
