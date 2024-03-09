@@ -3,7 +3,6 @@ export const ROUTE = Object.freeze({
   PATH: "/playground",
   COMPONENT: () => import("@/views/playground.view.vue"),
   META: {
-    auth: false,
     layout: "main",
   },
 });

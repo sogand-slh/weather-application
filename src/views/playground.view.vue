@@ -10,16 +10,62 @@
           prepend-icon="user"
           size="medium"
         />
+        <base-button
+          label="Login"
+          variant="filled"
+          prepend-icon="user"
+          size="medium"
+        />
+        <base-button circular-icon="user" variant="outlined" size="large" />
       </div>
     </section>
     <section class="playground__component">
       <h2 class="playground__component-name">The Header</h2>
       <the-header />
     </section>
+    <section class="playground__component">
+      <h2 class="playground__component-name">Base Card</h2>
+      <base-card title="Wind status" />
+      <base-card title="Sunrise & Sunset" />
+      <base-card title="UV index" />
+    </section>
+    <section class="playground__component">
+      <h2 class="playground__component-name">Base Dropdown</h2>
+      <base-dropdown
+        class="dropdown"
+        placeholder="Days"
+        prepend-icon="arrow-down"
+        name="Days"
+        :items="drawerItems"
+        v-model="isDrawerVisible"
+      />
+    </section>
+    <section class="playground__component">
+      <h2 class="playground__component-name">Search input</h2>
+      <search-input title="search" />
+    </section>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+
+const isDrawerVisible = ref(false);
+const drawerItems = ref([
+  {
+    label: "Daily",
+    value: "Daily",
+  },
+  {
+    label: "Weekly",
+    value: "weekly",
+  },
+  {
+    label: "Monthly",
+    value: "monthly",
+  },
+]);
+</script>
 
 <style scoped lang="scss">
 .playground {
@@ -33,7 +79,7 @@
   }
 
   &__component {
-    @include dimension(85%);
+    @include dimension(70%);
     box-sizing: border-box;
     margin: space(5) auto;
     border-bottom: 2px solid var(--theme-palette-placeholder);
@@ -57,6 +103,9 @@
   }
 }
 
+.dropdown {
+  @include dimension(100px);
+}
 .button {
   @include flex(column);
 

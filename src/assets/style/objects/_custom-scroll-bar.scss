@@ -1,0 +1,26 @@
+@use "../tools" as *;
+
+@mixin customScrollBar(
+  $width: 0.5rem,
+  $height: 1rem,
+  $scrollDefaultColor: var(--theme-palette-primary),
+  $scrollHoverColor: var(--theme-palette-placeholder)
+) {
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $height;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $scrollDefaultColor;
+    border-radius: shaper(20);
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: $scrollHoverColor;
+  }
+}

@@ -1,104 +1,105 @@
 <template>
   <div class="toast-manager">
-    <transition-group name="toast-bar" tag="div" appear>
-      <toast
-        class="toast"
-        v-for="(toast, index) in toasts"
+    <transition-group name="toast-message" appear>
+      <toast-message
+        v-for="toast in toastList"
         :key="toast.id"
         :type="toast.type"
         :message="toast.message"
         :duration="options.duration"
-        :style="{ top: `-${index * (toastHeight + margin)}px` }"
-        @click:close="removeMessage(id)"
+        @click:close="dismissToast(toast.id)"
       />
     </transition-group>
   </div>
 </template>
 
 <script setup>
-import eventBus from "@/modules/event-bus";
-import { TOAST_POSITION } from "@/constants/components/toast.constant";
-import { onBeforeUnmount, ref } from "vue";
-const toastHeight = 50;
-const margin = 10;
+  import eventBus from "@/modules/event-bus";
+  import { onBeforeUnmount, ref } from "vue";
+  const toastList = ref([]);
 
-defineProps({
-  options: {
-    type: Object,
-    required: true,
-  },
-});
+  defineProps({
+    options: {
+      type: Object,
+      default: () => ({
+        duration: 3000,
+      }),
+    },
+  });
 
-let toasts = ref([]);
-let id;
+  const generateUniqueId = () => {
+    const newId = Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
 
-const generateUniqueNumber = () => {
-  return Math.floor((1 + Math.random()) * 0x10000)
-    .toString(16)
-    .substring(1);
-};
-
-eventBus.subscribe("toast:generate", (message, type) => {
-  id = generateUniqueNumber();
-  onMessage({ message, type, id });
-});
-
-eventBus.subscribe("toast:clear", () => clear());
-
-eventBus.subscribe("toast:removeMessage", (duration) => {
-  console.log("toast remove event");
-  removeMessage(duration);
-});
-
-const removeMessage = (lifeTime = 5000) => {
-  setTimeout(
-    () => (toasts.value = toasts.value.filter((item) => item.id != id)),
-    lifeTime
-  );
-};
-
-const onMessage = ({ message = "", type = "error", id }) => {
-  let toast = {
-    id,
-    message,
-    type,
+    const hasSameId = toastList.value.some((toast) => toast.id === newId);
+    if (hasSameId) {
+      generateUniqueId();
+    }
+    return newId;
   };
-  toasts.value.push(toast);
-};
 
-const clear = () => {
-  toasts.value = [];
-};
+  eventBus.subscribe("toast:clear", () => clearToastList());
 
-onBeforeUnmount(() => {
-  eventBus.unsubscribe("toast:generate");
-  eventBus.unsubscribe("toast:clear");
-  eventBus.unsubscribe("toast:removeMessage");
-});
+  eventBus.subscribe("toast:generate", (message, type) => {
+    const id = generateUniqueId();
+    generateToast({ message, id, type });
+  });
+
+  const dismissToast = (toastId) => {
+    if (!toastId) {
+      throw new Error("Toast ID is required for dismissing a toast.");
+    }
+    toastList.value = toastList.value.filter((item) => item.id != toastId);
+  };
+
+  const generateToast = ({ message, id, type = "error" }) => {
+    if (!message || !id)
+      throw new Error(
+        "Invalid toast configuration, A message and an ID are required for generating a toast!",
+      );
+
+    toastList.value.push({
+      id,
+      message,
+      type,
+    });
+  };
+
+  const clearToastList = () => {
+    toastList.value = [];
+  };
+
+  onBeforeUnmount(() => {
+    eventBus.unsubscribe("toast:generate");
+    eventBus.unsubscribe("toast:clear");
+    eventBus.unsubscribe("toast:dismissToast");
+  });
 </script>
 
-<style lang="scss">
-$toast-height: 48;
-$toast-margin: 15;
-.toast-manager {
-  position: fixed;
-  bottom: 100px;
-  right: 350px;
-}
-.toast {
-  top: -($toast-height + $toast-margin) px;
-}
-.toast-bar-enter-active {
-  transition: all 0.3s ease-out;
-}
+<style lang="scss" scoped>
+  .toast-manager {
+    position: fixed;
+    z-index: $snackbar;
+    bottom: 2%;
+    right: 2%;
+    @include flex(column);
+    gap: space(2);
+  }
 
-.toast-bar-leave-active {
-  transition: all 0.8s ease-in;
-}
+  .toast-message {
+    &-enter-active {
+      transition: all 0.3s ease-out;
+    }
 
-.toast-bar-enter-from,
-.toast-bar-leave-to {
-  transform: translateX(100%);
-  opacity: 0;
-}
+    &-leave-active {
+      transition: all 0.8s ease-in;
+    }
+
+    &-enter-from,
+    &-leave-to {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
 </style>

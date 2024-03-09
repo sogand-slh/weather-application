@@ -1,4 +1,4 @@
-<template>Hi, Mashhad is Awful</template>
+<template>Hi</template>
 
 <script setup></script>
 
