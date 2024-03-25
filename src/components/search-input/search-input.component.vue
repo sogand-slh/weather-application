@@ -59,7 +59,7 @@ const expandable = () => {
     @include dimension(4rem, 4rem);
   }
   &--expandable {
-    @include dimension(35rem, 5rem);
+    @include dimension(70%, 5rem);
     border-radius: shaper(5);
     transition: $transition-3;
   }
