@@ -1,12 +1,14 @@
 <template>
   <div :class="['search-input', ...searchInputClassModifier]">
     <icon-loader name="search" class="search-input__icon" @click="expandable" />
-    <text-field
-      v-if="isExpanded"
-      :type="text"
-      class="search-input__field"
-      placeholder="Search..."
-    />
+    <transition name="search">
+      <text-field
+        v-if="isExpanded"
+        :type="text"
+        class="search-input__field"
+        placeholder="Search..."
+      />
+    </transition>
   </div>
 </template>
 
@@ -30,7 +32,7 @@ const isExpanded = ref(false);
 const searchInputClassConditionMapper = computed(() => [
   {
     condition: isExpanded.value,
-    modifier: "--expandable",
+    modifier: isExpanded.value ? `--expandable` : `--un-expandable`,
   },
 ]);
 
@@ -57,9 +59,20 @@ const expandable = () => {
     @include dimension(4rem, 4rem);
   }
   &--expandable {
-    @include dimension(35rem, 5rem);
+    @include dimension(70%, 5rem);
     border-radius: shaper(5);
     transition: $transition-3;
   }
+}
+
+.search-expand-enter-active,
+.search-expand-leave-active {
+  transition: all 0.5s ease;
+}
+
+.search-expand-enter,
+.search-expand-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
 }
 </style>
