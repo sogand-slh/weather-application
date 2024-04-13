@@ -1,14 +1,13 @@
 <template>
   <div class="dashboard">
     <div class="dashboard__city city">
-      <div class="city__search">
-        <search-input title="search" class="city__search" />
-      </div>
+      <search-input title="search" class="city__search" v-model="city" />
       <div class="city__information">
         <image-loader name="logo" />
         <span>{{ temperature }}</span>
-        <span>{{ temperature }}</span>
+        <span>{{ temperatureStatus }}</span>
       </div>
+      <base-button @click="getCityInformation('tehran')" label="get" />
       <div class="city__divider"></div>
       <div>location</div>
       <div>date</div>
@@ -47,9 +46,22 @@
 </template>
 
 <script setup>
+import { onMounted, ref } from "vue";
+import { getCityWeather } from "@/repositories/weather/weather.repository.js";
+
 defineOptions({
   name: "dashboard-view",
 });
+const city = ref();
+const cityInformation = ref();
+
+const getCityInformation = async (city) => {
+  cityInformation.value = await getCityWeather(city);
+  console.log(
+    "🚀 ~ getCityInformation ~ cityInformation:",
+    cityInformation.value
+  );
+};
 </script>
 
 <style lang="scss" scoped>
@@ -59,13 +71,21 @@ defineOptions({
   &__city {
     @include dimension(40%);
     @include flex();
-    &__search {
-      @include dimension(100%);
-    }
   }
   &__today-highlight {
     @include flex();
     @include dimension(60%);
+  }
+  &__days-forecast {
+    @include flex();
+    @include dimension(100%);
+  }
+}
+.city {
+  @include flex(column);
+  &__search {
+    @include flex(row);
+    align-self: flex-end;
   }
 }
 </style>
