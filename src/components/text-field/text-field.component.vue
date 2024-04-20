@@ -325,7 +325,6 @@ $caption: "caption";
   padding: space(1) space(2) space(0.5) space(2);
   gap: space(3);
   transition: $transition-3;
-  min-height: 5rem;
 
   &__icon {
     color: var(--theme-palette-on-primary-container);

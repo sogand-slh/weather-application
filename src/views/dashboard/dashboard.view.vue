@@ -3,9 +3,9 @@
     <div class="dashboard__city city">
       <search-input title="search" class="city__search" v-model="city" />
       <div class="city__information">
-        <image-loader name="logo" />
-        <span>{{ temperature }}</span>
-        <span>{{ temperatureStatus }}</span>
+        <weather-icon-loader :weather-code="weatherIconCode" />
+        <!-- <span>{{ temperature }}</span> -->
+        <!-- <span>{{ temperatureStatus }}</span> -->
       </div>
       <base-button @click="getCityInformation('tehran')" label="get" />
       <div class="city__divider"></div>
@@ -15,8 +15,8 @@
     <div class="dashboard__today-highlight">
       <base-card>
         <div class="city__information">
-          <span>{{ temperature }}</span>
-          <span>{{ temperature }}</span>
+          <!-- <span>{{ temperature }}</span> -->
+          <!-- <span>{{ temperature }}</span> -->
         </div>
         <div class="divider"></div>
         <div>location</div>
@@ -24,8 +24,8 @@
       </base-card>
       <base-card>
         <div class="city__information">
-          <span>{{ temperature }}</span>
-          <span>{{ temperature }}</span>
+          <!-- <span>{{ temperature }}</span> -->
+          <!-- <span>{{ temperature }}</span> -->
         </div>
         <div class="divider"></div>
         <div>location</div>
@@ -33,8 +33,8 @@
       </base-card>
       <base-card>
         <div class="city__information">
-          <span>{{ temperature }}</span>
-          <span>{{ temperature }}</span>
+          <!-- <span>{{ temperature }}</span> -->
+          <!-- <span>{{ temperature }}</span> -->
         </div>
         <div class="divider"></div>
         <div>location</div>
@@ -54,12 +54,14 @@ defineOptions({
 });
 const city = ref();
 const cityInformation = ref();
+const weatherIconCode = ref("02d");
 
 const getCityInformation = async (city) => {
   cityInformation.value = await getCityWeather(city);
+  weatherIconCode.value = cityInformation.value.list[0].weather[0].icon;
   console.log(
-    "🚀 ~ getCityInformation ~ cityInformation:",
-    cityInformation.value
+    "🚀 ~ getCityInformation ~ cityInformation : icon :",
+    cityInformation.value.list[0].weather[0].icon
   );
 };
 </script>
@@ -70,21 +72,18 @@ const getCityInformation = async (city) => {
   @include dimension(100%);
   &__city {
     @include dimension(40%);
-    @include flex();
   }
   &__today-highlight {
-    @include flex();
     @include dimension(60%);
   }
   &__days-forecast {
-    @include flex();
     @include dimension(100%);
   }
 }
 .city {
   @include flex(column);
   &__search {
-    @include flex(row);
+    @include flex(row, $align: center);
     align-self: flex-end;
   }
 }

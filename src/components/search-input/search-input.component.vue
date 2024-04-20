@@ -63,6 +63,9 @@ const expandable = () => {
     border-radius: shaper(5);
     transition: $transition-3;
   }
+  &__field {
+    @include dimension(100%, 100%);
+  }
 }
 
 .search-expand-enter-active,

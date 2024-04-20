@@ -1,16 +1,17 @@
 import axios from "axios";
 import eventBus from "@/modules/event-bus";
+import { apiKey } from "@/constants/urls/url.constant";
+const onRequest = (request) => {
+  request.url += `?appid=${apiKey}`;
 
-const onRequest = (request) => request;
+  return request;
+};
 
 const onRequestError = (error) => {
   return Promise.reject(error);
 };
 
 const onResponse = (response) => {
-  let url = response.config.url;
-  console.log("🚀 ~ onResponse ~ url:", url);
-
   if (response.data?.data?.message)
     eventBus.publish("toast:generate", response.data?.data?.message, "success");
 
@@ -18,11 +19,9 @@ const onResponse = (response) => {
 };
 
 const onResponseError = (error, app) => {
-  let url = error?.response?.config?.url;
-
   eventBus.publish(
     "toast:generate",
-    error?.response?.data?.data?.message?.fa,
+    error?.response?.data?.data?.message,
     "error"
   );
 

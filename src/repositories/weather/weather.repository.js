@@ -1,13 +1,13 @@
 import axios from "axios";
-import { apiKey } from "@/constants/urls/url.constant";
-export const getCityWeather = (city) => {
-  const params = `?q=${city}`;
 
-  return axios({
+export const getCityWeather = (city) =>
+  axios({
     method: "GET",
-    url: `/weather${params}`,
+    url: `/weather`,
+    params: {
+      q: city,
+    },
   });
-};
 
 export default {
   getCityWeather,
