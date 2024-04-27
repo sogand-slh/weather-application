@@ -1,13 +1,19 @@
 <template>
   <div class="dashboard">
     <div class="dashboard__city city">
-      <search-input title="search" class="city__search" v-model="city" />
+      <search-input
+        title="search"
+        class="city__search"
+        v-model="city"
+        @update:model="getCityInformation(city)"
+      />
+      {{ city }}
       <div class="city__information">
         <weather-icon-loader :weather-code="weatherIconCode" />
-        <!-- <span>{{ temperature }}</span> -->
+        <span>{{ temperature }}</span>
         <!-- <span>{{ temperatureStatus }}</span> -->
       </div>
-      <base-button @click="getCityInformation('tehran')" label="get" />
+      <!-- <base-button @click="getCityInformation('tehran')" label="get" /> -->
       <div class="city__divider"></div>
       <div>location</div>
       <div>date</div>
@@ -56,12 +62,12 @@ const city = ref();
 const cityInformation = ref();
 const weatherIconCode = ref("02d");
 
-const getCityInformation = async (city) => {
-  cityInformation.value = await getCityWeather(city);
+const getCityInformation = async (newCity) => {
+  cityInformation.value = await getCityWeather(newCity);
   weatherIconCode.value = cityInformation.value.list[0].weather[0].icon;
   console.log(
     "🚀 ~ getCityInformation ~ cityInformation : icon :",
-    cityInformation.value.list[0].weather[0].icon
+    cityInformation.value
   );
 };
 </script>

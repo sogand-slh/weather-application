@@ -4,6 +4,8 @@
     <transition name="search">
       <text-field
         v-if="isExpanded"
+        v-model="model"
+        @change="updateSearchInput"
         :type="text"
         class="search-input__field"
         placeholder="Search..."
@@ -19,6 +21,7 @@ import { computed, ref } from "vue";
 defineOptions({
   name: "search-input",
 });
+const emits = defineEmits(["update:model"]);
 
 defineProps({
   title: {
@@ -26,13 +29,16 @@ defineProps({
     default: "",
   },
 });
-
+const model = defineModel({
+  type: [String, Number],
+  required: false,
+});
 const isExpanded = ref(false);
 
 const searchInputClassConditionMapper = computed(() => [
   {
     condition: isExpanded.value,
-    modifier: isExpanded.value ? `--expandable` : `--un-expandable`,
+    modifier: isExpanded.value && `--expandable`,
   },
 ]);
 
@@ -40,10 +46,10 @@ const searchInputClassModifier = useClassModifier(
   "search-input",
   searchInputClassConditionMapper
 );
-const expandable = () => {
-  isExpanded.value = !isExpanded.value;
-  console.log("search has been expanded");
-};
+
+const expandable = () => (isExpanded.value = !isExpanded.value);
+
+const updateSearchInput = () => emits("update:model", model);
 </script>
 
 <style lang="scss" scoped>

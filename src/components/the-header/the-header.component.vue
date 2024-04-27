@@ -3,20 +3,20 @@
     <div class="header__content-wrapper">
       <div class="header__location">
         <icon-loader name="location" class="header__location--icon" />
-        <span>{{ city }}</span>
+        <span>{{ translator("weatherApplication") }}</span>
       </div>
 
       <div class="header__controls controls">
-        <text-field
-          v-model="selectedCity"
-          :placeholder="translator('searchCity')"
-          :name="translator('city')"
-          :rules="{ required: true }"
-          prepend-icon="location"
-        />
-        <div class="controls__temperature">
-          <base-badge text="℃" />
-          <base-badge text="℉" />
+        <div
+          class="controls__temperature"
+          v-for="unit in unitTemperature"
+          :key="unit.name"
+          :class="{
+            'theme-toggler__option': true,
+            'theme-toggler__option--active': theme.name === currentTheme,
+          }"
+        >
+          <base-badge :text="unit.icon" />
         </div>
         <theme-toggler />
       </div>
@@ -26,7 +26,7 @@
 
 <script setup>
 import { useLocaleTranslator } from "@/composables";
-import { ref } from "vue";
+import { inject, reactive, ref } from "vue";
 
 const { translator } = useLocaleTranslator("components.theHeader");
 
@@ -34,8 +34,7 @@ defineOptions({
   name: "the-header",
 });
 
-const city = ref("Tehran");
-const selectedCity = ref("Tehran");
+
 </script>
 
 <style lang="scss" scoped>

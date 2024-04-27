@@ -1,5 +1,5 @@
 <template>
-  <div class="theme-toggler">
+  <div class="temperature-toggler">
     <div
       v-for="theme in themes"
       :key="theme.name"
@@ -21,27 +21,29 @@ defineOptions({
   name: "theme-toggler",
 });
 
-const themeManager = inject("$theme");
+const temperatureManager = inject("$unitTemperature");
 
-const themes = reactive([
+const unitTemperature = reactive([
   {
-    name: "light",
-    icon: "sun",
+    name: "celsius",
+    icon: "℃",
   },
   {
-    name: "dark",
-    icon: "moon",
+    name: "fahrenheit",
+    icon: "℉",
   },
 ]);
 
-const currentTheme = computed(() => themeManager.theme.value);
+const currentTemperature = computed(() => temperatureManager.temperature.value);
 
 const updateAppTheme = (newTheme) => {
   themeManager.theme = newTheme;
 };
 
 const iconNameDefiner = (theme) => {
-  return theme.name === currentTheme.value ? `${theme.icon}-active` : theme.icon;
+  return theme.name === currentTheme.value
+    ? `${theme.icon}-active`
+    : theme.icon;
 };
 </script>
 
